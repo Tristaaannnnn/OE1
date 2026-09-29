@@ -1,0 +1,12 @@
+const plants=[
+{name:'Snake Plant',emoji:'🪴',light:'Low',water:'Every 2–3 weeks',benefit:'Very tolerant of low light and missed watering.'},
+{name:'Monstera',emoji:'🌿',light:'Medium',water:'About once a week',benefit:'Large leaves make a bold statement indoors.'},
+{name:'Peace Lily',emoji:'🌱',light:'Low',water:'About once a week',benefit:'Known for elegant leaves and white flowers.'},
+{name:'Aloe Vera',emoji:'🌵',light:'Bright',water:'Every 2–3 weeks',benefit:'Succulent leaves store water and prefer bright light.'},
+{name:'Spider Plant',emoji:'🌾',light:'Medium',water:'About once a week',benefit:'Fast-growing and beginner-friendly.'},
+{name:'ZZ Plant',emoji:'🍃',light:'Low',water:'Every 2–3 weeks',benefit:'Handles dry soil and lower-light spaces well.'}
+];
+const tips=['Rotate your plant occasionally so it grows evenly.','Check the soil before watering instead of following a strict schedule.','Use a pot with drainage holes to help prevent overwatering.','Dust broad leaves gently to keep them clean and able to absorb light.'];
+const grid=document.getElementById('plantGrid'),search=document.getElementById('search'),light=document.getElementById('light'),badge=document.getElementById('countBadge');
+function render(){const q=search.value.toLowerCase(), l=light.value; const list=plants.filter(p=>(p.name.toLowerCase().includes(q)||p.benefit.toLowerCase().includes(q))&&(l==='all'||p.light===l)); badge.textContent=`${list.length} plant${list.length!==1?'s':''}`; grid.innerHTML=list.length?list.map(p=>`<article class="card"><div class="plant-art">${p.emoji}</div><div class="card-content"><button class="favorite" aria-label="Favorite ${p.name}" onclick="this.classList.toggle('active')">♡</button><span class="tag">${p.light} light</span><h3>${p.name}</h3><p>${p.benefit}</p><div class="care"><strong>Water:</strong> ${p.water}</div></div></article>`).join(''):'<div class="empty">No plants match your search.</div>';}
+search.addEventListener('input',render);light.addEventListener('change',render);document.getElementById('tipsBtn').addEventListener('click',()=>{document.getElementById('tipBox').innerHTML='<strong>Plant Care Tip:</strong> '+tips[Math.floor(Math.random()*tips.length)];});render();
